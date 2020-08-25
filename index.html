@@ -15,21 +15,50 @@
         box-shadow: 2px 2px 1px #eeeeee;
         padding: 10px;
         margin-right: 10px;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
-    <!-- <div id="root"></div> -->
-    <div class="car">
+    <div id="root"></div>
+    <!-- <div class="car">
       <h3>Ford Focus</h3>
       <p>Year: <strong>2012</strong></p>
     </div>
+
+    <div class="car">
+      <h3>Audi A8</h3>
+      <p>Year: <strong>2015</strong></p>
+    </div>
+
+    <div class="car">
+      <h3>Mazda 3</h3>
+      <p>Year: <strong>2018</strong></p>
+    </div> -->
     <script type="text/babel">
 
-      // ReactDOM.render(
-      //   <h1>Hello, world!!!</h1>,
-      //   document.getElementById('root')
-      // );
+    function Car(props){
+      return (
+        <div className="car">
+          <h3>{props.name}</h3>
+          <p>Year: <strong>{props.year}</strong></p>
+          <small>This is car</small>
+        </div>
+      )
+    }
+
+    const App = (
+      <div>
+        <Car name="Ford" year="2018"/>
+        <Car name="Audi A8" year="2016"/>
+        <Car name="Mazda 3" year="2010"/>
+      </div>
+    )
+
+    ReactDOM.render(
+      App,
+      document.querySelector('#root')
+    )
 
     </script>
     <!--
