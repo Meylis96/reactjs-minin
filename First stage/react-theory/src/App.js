@@ -1,18 +1,29 @@
 import React, { Component } from 'react';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import Counter from './Counter/Counter';
 import './App.scss';
-import Car from './Car/Car.js';
+import Car from './Car/Car';
+
+export const ClickedContext = React.createContext(false);
 
 class App extends Component {
 
-  state = {
-    cars: [
-      {name: 'Ford Focus', year: '2018'},
-      {name: 'Audi A8', year: '2016'},
-      {name: 'Mazda 3', year: '2010'}
-    ],
-    pageTitle: 'React components',
-    showCars: false
-  };
+  constructor(props){
+    console.log('App Constructor');
+    super(props);
+
+    this.state = {
+      clicked: false,
+      cars: [
+        {name: 'Ford Focus', year: 2018},
+        {name: 'Audi A8', year: 2016},
+        {name: 'Mazda 3', year: 2010}
+      ],
+      pageTitle: 'React components',
+      showCars: false
+    }
+  }
+
 
   changeTitleHandler = (newTitle) => {
     this.setState({
@@ -50,7 +61,18 @@ class App extends Component {
     this.setState({cars})
   }
 
+  componentWillMount(){
+    console.log('App componentWillMount');
+  }
+
+  componentDidMount(){
+    console.log('App componentDidMount');
+  }
+
+
+
   render(){
+    console.log('App Render');
     const divStyle = {
       textAlign: 'center'
     };
@@ -60,25 +82,39 @@ class App extends Component {
     if(this.state.showCars){
       cars = this.state.cars.map((car, index) => {
         return (
+          <ErrorBoundary key={index}>
           <Car
-            key={index}
             name={car.name}
             year={car.year}
+            index={index}
             onDelete={this.deleteHandler.bind(this, index)}
             onChangeName={event => this.onChangeName(event.target.value, index)}
           />
+          </ErrorBoundary>
         )
       }) 
     }
 
     return (
       <div className="app" style={divStyle}>
-        <h1>{this.state.pageTitle}</h1>
+        {/* <h1>{this.state.pageTitle}</h1> */}
+        <h1>{this.props.title}</h1>
 
-        <button className={'app__btn'}
+        <ClickedContext.Provider value={this.state.clicked}>
+          <Counter />
+        </ClickedContext.Provider>
+        
+
+        {/* <hr/> */}
+
+        <button
+          style={{marginTop: '20px'}}
+          className={'app__btn'}
           onClick={this.toggleCarsHandler}>
           Toggle cars
         </button>
+
+        <button onClick={() => this.setState({clicked: true})}>Change clicked</button>
 
         <div style={{
           width: '400px',

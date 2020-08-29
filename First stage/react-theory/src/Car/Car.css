@@ -4,12 +4,14 @@
     padding: 10px;
     border-radius: 5px;
     transition: border, box-shadow, .3s;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14);
 }
 
 .input {}
 
 .input:active, .input:focus{
-    outline: none;
+    /* outline: none; */
 }
 
 .input.green{
